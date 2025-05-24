@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wisata_rekreasi/screen/login_screen.dart';
+import 'package:wisata_rekreasi/screen/register_screen.dart';
 import 'package:wisata_rekreasi/screen/splash_screen.dart';
 
 void main() {
@@ -13,7 +15,9 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
      title: 'Wisata Rekreasi',
       home: 
-      SplashScreen(),
+      // SplashScreen(),
+       LoginScreen(),
+      // RegisterScreen(),
     );
   }
 }
