@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wisata_rekreasi/screen/register_screen.dart';
+import 'package:flutter/gestures.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,9 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
    final _passwordController = TextEditingController();
    bool _isPasswordVisible = false;
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               margin: const EdgeInsets.only(top: 50),
               alignment: Alignment.center,
-              child: const CircleAvatar(
-                radius: 75,
-                backgroundImage: AssetImage('assets/location.png'),
+              child:Image.asset(
+                'assets/location.png',
+                width: 150,
+                height: 150
               ),
             ),
             const SizedBox(
@@ -91,24 +92,35 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {
                              
                             },
-                            child: const Text('Masuk'))
+                            child: const Text('Login'))
                 ]
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                  RichText(text: TextSpan(
-                  text: 'Don\'t have an account?',
+                  text: 'Don\'t have an account? ',
                   style: const TextStyle(
                     color: Colors.black
                   ),
                   children: [
                     TextSpan(
-                      text: ' Register',
+                      text: 'Sign Up',
                       style: const TextStyle(
-                        color: Colors.black,
+                        color: Colors.blue,
                         decoration: TextDecoration.underline
                       ), 
+                       recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => const RegisterScreen(),
+                                    ),
+                                  );
+                                },
                     )
                   ]
                  ),
