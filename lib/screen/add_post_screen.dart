@@ -133,6 +133,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               _pickImage(ImageSource.gallery);
             },
             child: Text('Gallery'),
+            
           ),
         ],
       ), 
@@ -156,20 +157,29 @@ class _AddPostScreenState extends State<AddPostScreen> {
           child: Column(
             children: [
              Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                ),
               alignment: Alignment.center,
               child: _image == null
               ? Text('No image selected')
-              : Image.file(_image!),
+              : Image.file(_image!, height: 200, width: double.infinity, fit: BoxFit.cover,),
              ),
+             const SizedBox(height: 16.0),
              ElevatedButton.icon(
               onPressed: _showImageSourceDialog,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(141, 153, 174, 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)
                 ),
+                iconSize: 24,
                 iconColor: Colors.white,
+                foregroundColor: Colors.white,
                 textStyle: TextStyle(
-                color: Colors.white,
+                //color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
                 ),
               ), 
               icon: Icon(Icons.file_upload_outlined),

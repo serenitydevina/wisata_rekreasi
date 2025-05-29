@@ -119,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                         _isLoading ? const CircularProgressIndicator() :
                         ElevatedButton(
                             onPressed: () {
                              _login();
@@ -182,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final doc = await FirebaseFirestore.instance.collection('users').doc(UserCredential.user!.uid).get();
       final role = doc['role'];
       if(role == 'admin'){
-        Navigator.pushReplacementNamed(context, '/admin');
+       Navigator.pushReplacementNamed(context, '/admin');
       }else{
         Navigator.pushReplacementNamed(context, '/user');
       }

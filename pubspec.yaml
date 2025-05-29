@@ -27,3 +27,14 @@ flutter:
   assets:
     - assets/location.png
     - assets/placeholder_image.png
+    - assets/Lampung.jpg
+    - assets/Bandung.jpg
+    - assets/Bogor.jpg
+    - assets/Denpasar.jpg
+    - assets/Jakarta.jpg
+    - assets/Jogja.jpg
+
+  # fonts:
+  #   - family: Nunito
+  #     fonts:
+  #       - asset: assets/Nunito-Regular.ttf
