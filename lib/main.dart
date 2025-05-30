@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wisata_rekreasi/firebase_options.dart';
-import 'package:wisata_rekreasi/screen/add_post_screen.dart';
+import 'package:wisata_rekreasi/screen/add_post_kota_screen.dart';
+import 'package:wisata_rekreasi/screen/add_post_wisata_screen.dart';
 import 'package:wisata_rekreasi/screen/home_screen.dart';
 // import 'package:wisata_rekreasi/screen/home_screen_admin.dart';
 // import 'package:wisata_rekreasi/screen/home_screen_user.dart';
@@ -98,7 +99,7 @@ class _MainScreenState extends State<MainScreen> {
           ? FloatingActionButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AddPostScreen()));
+                    builder: (context) => const AddPostKotaScreen()));
               },
               child: const Icon(Icons.add, size: 50),
                backgroundColor: const Color.fromRGBO(141, 153, 174, 1),

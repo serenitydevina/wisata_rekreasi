@@ -10,6 +10,8 @@ class KategoriWisataScreen extends StatefulWidget {
 class _KategoriWisataScreenState extends State<KategoriWisataScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+
+    );
   }
 }

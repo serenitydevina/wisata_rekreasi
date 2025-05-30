@@ -7,14 +7,14 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({super.key});
+class AddPostWisataScreen extends StatefulWidget {
+  const AddPostWisataScreen({super.key});
 
   @override
-  State<AddPostScreen> createState() => _AddPostScreenState();
+  State<AddPostWisataScreen> createState() => _AddPostWisataScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
   File? _image;
   String? _base64Image;
   final TextEditingController _namawisataController = TextEditingController();
@@ -100,7 +100,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
       final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       final fullname = userDoc.data()?['fullname'] ?? 'Anonymous';
-      await FirebaseFirestore.instance.collection('posts').add({
+      await FirebaseFirestore.instance.collection('posts_wisata').add({
         'image':_base64Image,
         'description':_descriptionController.text,
         'createdAt': now,
@@ -118,21 +118,23 @@ class _AddPostScreenState extends State<AddPostScreen> {
     showDialog(
       context: context, 
       builder: (context) =>AlertDialog(
-        title: Text('Choose Image Source'),
+        backgroundColor:  Color.fromRGBO(141, 153, 174, 1),
+        title: Text('Choose Image Source', style: TextStyle(color: Colors.white),
+        ),
         actions : [
           TextButton(
             onPressed: (){
               Navigator.pop(context);
               _pickImage(ImageSource.camera);
             } ,
-            child: Text('Camera'),
+            child: Text('Camera', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             onPressed: (){
               Navigator.pop(context);
               _pickImage(ImageSource.gallery);
             },
-            child: Text('Gallery'),
+            child: Text('Gallery', style: TextStyle(color: Colors.white)),
             
           ),
         ],
@@ -185,7 +187,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
               icon: Icon(Icons.file_upload_outlined),
               label: const Text('Upload Foto'),
               ),
+              TextField()
             ],
+            
             ),
         ) ,
     );
