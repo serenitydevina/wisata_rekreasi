@@ -117,7 +117,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       String heroTag =
                           'wisata-image-${city.createdAt.millisecondsSinceEpoch}';
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => KategoriWisataScreen(kota: city, role: widget.role,)
+                          ),
+                          );
+                        },
                         child: SizedBox(
                           // width: 175,
                           // height: 175,
