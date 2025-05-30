@@ -57,14 +57,12 @@ class _AddPostKotaScreenState extends State<AddPostKotaScreen> {
       );
       return;
     }
-
     try{
-
       //final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       //final fullname = userDoc.data()?['fullname'] ?? 'Anonymous';
-      await FirebaseFirestore.instance.collection('posts_kota').add({
-        'image':_base64Image,
-        'name':_namaKotaController.text,
+      await FirebaseFirestore.instance.collection('kotas').add({
+        'gambarUrl':_base64Image,
+        'nama':_namaKotaController.text,
         'createdAt': now,
         'userId': uid,
       });
@@ -102,7 +100,6 @@ class _AddPostKotaScreenState extends State<AddPostKotaScreen> {
       ), 
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

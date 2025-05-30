@@ -20,7 +20,8 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
   final TextEditingController _namawisataController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
-  TimeOfDay selectedTime = TimeOfDay.now();
+  TimeOfDay jamBuka = TimeOfDay.now();
+  TimeOfDay jamTutup = TimeOfDay.now();
   bool _isUploading = false;
   double? _latitude;
   double? _longitude;
