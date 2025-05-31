@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_rekreasi/screen/profile_screen.dart';
 
 
 class EditProfilScreen extends StatefulWidget {
@@ -18,6 +21,11 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
    final ImagePicker _picker = ImagePicker();
   File? _image;
   String? _base64Image;
+
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
    Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
     if(pickedFile !=null){
@@ -40,18 +48,65 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
     });
   }
 
+  Future<void> _loadProfile() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    final data = doc.data();
+    if (data != null) {
+        _nameController.text = data['fullname'] ?? 'Anonim';
+    }
+    final prefs = await SharedPreferences.getInstance();
+    final gambar = prefs.getString('profile_image_$uid');
+    if (gambar != null) {
+      setState(() {
+        _image = File(gambar);
+      });
+    }
+  }
+   Future<void> _saveName() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final newName = _nameController.text.trim();
+
+    if (newName.isNotEmpty) {
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'fullname': newName,
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Nama berhasil disimpan")),
+      );
+
+      // Arahkan ke halaman profil utama
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ProfileScreen()),
+      );
+    }
+  }
+   Future<void> _saveProfileImagePath(String path) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profile_image_$uid', path);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         leading: IconButton(
           onPressed: (){
           //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
           Navigator.pop(context);
           }, 
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Theme.of(context).textTheme.bodyLarge!.color,
           )),
           title: Text('Edit Profil'),
       ),
@@ -77,14 +132,23 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                    alignment: Alignment.center,
                   //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //ClipOval(
+                    ClipOval(
+                      child: 
+                    _image != null ?
+                      Image.file(
+                        _image!,
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.cover
+                      )
+                      :
                       Image.asset(
                         'assets/location.png',
                         width: 150,
                         height: 150,
                         fit: BoxFit.contain
                     ),
-                   // ),
+                    ),
                     // Align(
                     // alignment: Alignment.bottomRight,
                     // child: CircleAvatar(
@@ -94,11 +158,16 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                     Positioned(
                       bottom: 0,
                       right: 0,
-                      child: CircleAvatar(
-                        radius: 25,
-                        child: Icon(Icons.edit),
+                      child: GestureDetector(
+                        onTap: () => _pickImage(ImageSource.gallery),
+                        child: CircleAvatar(
+                          radius: 25,
+                          child: Icon(Icons.edit,color: Color.fromRGBO(141, 153, 174, 1),
+                          ),
+                          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                        )
                       ),
-                    ) 
+                    ),
                   ],
                 ),
               ),
@@ -139,7 +208,10 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                          mainAxisAlignment: MainAxisAlignment.end,
                          children: [
                            ElevatedButton(
-                             onPressed:(){},
+                             onPressed:(){
+                               _saveName();
+                               _saveProfileImagePath(_image!.path);
+                             },
                              style: ElevatedButton.styleFrom(
                                backgroundColor: Color.fromRGBO(141, 153, 174, 1),
                                foregroundColor: Colors.white,

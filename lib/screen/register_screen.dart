@@ -22,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -36,13 +37,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Register',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge,
+                // TextStyle(
+                //   fontSize: 20,
+                //   fontWeight: FontWeight.bold,
+                  
+                // ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -145,11 +148,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:Color.fromRGBO(141, 153, 174, 1.0),
-                             foregroundColor: Colors.white
+                             foregroundColor:Colors.white,
                             ),
                              child: const Text('Save'),
-                             
-
                           ),
                         ],
                       ),
@@ -157,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       RichText(
                         text: TextSpan(
                           text: 'Sudah punya akun? ',
-                          style: const TextStyle(color: Colors.black),
+                          style: Theme.of(context).textTheme.bodySmall,
                           children: [
                             TextSpan(
                               text: 'Sign In',

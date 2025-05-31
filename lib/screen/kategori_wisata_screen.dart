@@ -19,6 +19,7 @@ class _KategoriWisataScreenState extends State<KategoriWisataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(207, 224, 195, 1),
         leading: IconButton(

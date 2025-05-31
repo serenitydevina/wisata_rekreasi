@@ -103,15 +103,16 @@ class _AddPostKotaScreenState extends State<AddPostKotaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: 
         AppBar(
           leading: IconButton(
             onPressed: (){
               Navigator.pop(context);
             }, 
-          icon: Icon(Icons.arrow_back)
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.bodyLarge!.color),
           ),
-          title: Text('Tambah Kota'),
+          title: Text('Tambah Kota', style:Theme.of(context).textTheme.bodyLarge ,),
         ),
         body:SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),

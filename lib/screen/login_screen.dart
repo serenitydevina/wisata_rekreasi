@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
        child: SingleChildScrollView(
         child: Column(
@@ -37,13 +38,15 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 16,
               ),
-            const Text(
+             Text(
               'Login',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: 
+              // TextStyle(
+              //   fontSize: 20,
+              //   fontWeight: FontWeight.bold,
+              // ),
+              Theme.of(context).textTheme.bodyLarge,
             ),
             Padding(padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -136,9 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                  RichText(text: TextSpan(
                   text: 'Don\'t have an account? ',
-                  style: const TextStyle(
-                    color: Colors.black
-                  ),
+                  style: 
+                  // const TextStyle(
+                  //   color: Colors.black
+                  // ),
+                  Theme.of(context).textTheme.bodySmall,
                   children: [
                     TextSpan(
                       text: 'Sign Up',

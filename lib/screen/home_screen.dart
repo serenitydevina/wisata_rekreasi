@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //   {'name': 'Denpasar', 'imagePath': 'assets/Denpasar.jpg'},
     // ];
     return Scaffold(
+       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 19.0),
@@ -41,19 +42,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                       Text(
                         'Hi!',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: 
+                        // TextStyle(
+                        //   fontSize: 12,
+                        //   fontWeight: FontWeight.w500,
+                        // ),
+                        Theme.of(context).textTheme.headlineSmall,
                       ),
-                      const Text(
+                      Text(
                         'Kota mana yang ingin dikunjungi?',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: 
+                        // TextStyle(
+                        //   fontSize: 12,
+                        //   fontWeight: FontWeight.w500,
+                        // ),
+                        Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
                   ),
@@ -129,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            color: Theme.of(context).cardColor,
                             elevation: 3,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -155,10 +161,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                        Text(
                                       city.nama,
-                                       style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                     ),
+                                       style: 
+                                    //    const TextStyle(
+                                    //     fontSize: 16,
+                                    //     fontWeight: FontWeight.bold,
+                                    //  ),
+                                    Theme.of(context).textTheme.bodyMedium
                                      ),
                                     ],
                                   ),
