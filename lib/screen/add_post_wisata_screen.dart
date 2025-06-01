@@ -375,10 +375,9 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text("Tambah Wisata"),
-        backgroundColor: Color(0xFFD9E5D6),
+        title: Text("Tambah Wisata",  style: Theme.of(context).textTheme.bodyLarge ,),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
