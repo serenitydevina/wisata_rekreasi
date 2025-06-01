@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Account'),
+        title:  Text('Account',style: Theme.of(context).textTheme.bodyLarge,),
         actions: [
           IconButton(
             onPressed: () {
