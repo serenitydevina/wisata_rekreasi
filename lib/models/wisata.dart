@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Wisata {
   final String id;
@@ -9,8 +10,8 @@ class Wisata {
   final double longitude;
   final String deskripsi;
   final String gambarUrl;
-  final TimeOfDay jamBuka;
-  final TimeOfDay jamTutup;
+  final String jamBuka;
+  final String jamTutup;
   final String kotaId; 
   final DateTime createdAt;
 
@@ -30,22 +31,35 @@ class Wisata {
 
   factory Wisata.fromDocument(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
-    TimeOfDay parseTime(String timestr){
-       final parts = timestr.split(':');
-      final hour = int.parse(parts[0]);
-      final minute = int.parse(parts[1]);
-      return TimeOfDay(hour: hour, minute: minute);
-    }
+    // TimeOfDay parseTime(String timestr){
+    //    final parts = timestr.split(':');
+    //   final hour = int.parse(parts[0]);
+    //   final minute = int.parse(parts[1]);
+    //   return TimeOfDay(hour: hour, minute: minute);
+    // }
+  TimeOfDay parseTime(String timestr) {
+    final dt = DateFormat.Hm().parse(timestr); // Contoh: "7:00 PM"
+    return TimeOfDay(hour: dt.hour, minute: dt.minute);
+  }
+
     return Wisata(
       id: doc.id,
       nama: data['nama'] ?? '',
       // lokasi: map['lokasi'] ?? '',
-      latitude: data['latitude'] ?? 0.0,
-      longitude: data['longitude'] ?? 0.0,
+      latitude: 
+      // data['latitude'] ?? 0.0,
+      double.tryParse(data['latitude']) ?? 0.0 ,
+      longitude: 
+      // data['longitude'] ?? 0.0,
+     double.tryParse(data['longitude']) ?? 0.0 ,
       deskripsi: data['deskripsi'] ?? '',
       gambarUrl: data['gambarUrl'] ?? '',
-      jamBuka:  parseTime(data['jamBuka']),
-      jamTutup: parseTime(data['jamTutup']),
+      jamBuka:  
+      // parseTime(data['jamBuka']),
+      data['jamBuka'] ?? '',
+      jamTutup: 
+      // parseTime(data['jamTutup']),
+      data['jamTutup'] ?? '',
       kotaId: data['kotaId'] ?? '', 
        createdAt: DateTime.parse(data['createdAt']),
     );

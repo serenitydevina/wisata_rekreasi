@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wisata_rekreasi/models/wisata.dart';
 
@@ -22,8 +24,8 @@ class DetailScreen extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              wisata.gambarUrl,
+            child: Image.memory(
+             base64Decode(wisata.gambarUrl),
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,

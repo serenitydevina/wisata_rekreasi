@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:wisata_rekreasi/models/kota.dart';
 import 'package:wisata_rekreasi/models/wisata.dart';
 import 'package:wisata_rekreasi/screen/add_post_wisata_screen.dart';
+import 'package:wisata_rekreasi/screen/detail_screen.dart';
 
 class KategoriWisataScreen extends StatefulWidget {
    final String role;
@@ -61,17 +62,29 @@ class _KategoriWisataScreenState extends State<KategoriWisataScreen> {
           );
           }).toList();
            return ListView.builder(
-            
             itemCount: wisata.length,
             itemBuilder: (context, index) {
              final place = wisata[index];
-             ListTile(
-              title: Text(place.nama),
-              subtitle: Image.memory(
-                 base64Decode(place.gambarUrl),
-                 fit: BoxFit.cover,
-                 height: 120,
-                 ),
+             return
+             Card(
+              color: Theme.of(context).cardColor,
+               child: ListTile(
+                title: Text(place.nama),
+                trailing: ClipRRect(
+                   borderRadius: BorderRadius.circular(10),
+                  child: Image.memory(
+                     base64Decode(place.gambarUrl),
+                     fit: BoxFit.cover,
+                     height: 100,
+                     width: 100, 
+                     ), 
+                ),
+                   onTap: () => Navigator.of(context).push(
+                     MaterialPageRoute(
+                       builder: (context) => DetailScreen(wisata: place,),
+                     ),
+                   ),
+               ),
              );
         },
         );
@@ -94,7 +107,7 @@ class _KategoriWisataScreenState extends State<KategoriWisataScreen> {
         onPressed: () {
           Navigator.of(
             context,
-          ).push(MaterialPageRoute(builder: (context) => AddPostWisataScreen()));
+          ).push(MaterialPageRoute(builder: (context) => AddPostWisataScreen(kota: widget.kota,)));
         },
         backgroundColor: const Color.fromRGBO(141, 153, 174, 1),
         foregroundColor: Colors.white,

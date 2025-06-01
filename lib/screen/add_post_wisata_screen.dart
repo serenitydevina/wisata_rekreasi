@@ -206,8 +206,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter_image_compress/flutter_image_compress.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:wisata_rekreasi/models/kota.dart';
 
 class AddPostWisataScreen extends StatefulWidget {
+  final Kota kota;
+  const AddPostWisataScreen({super.key, required this.kota});
   @override
   _AddPostWisataScreenState createState() => _AddPostWisataScreenState();
 }
@@ -252,6 +255,13 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
       });
     }
   }
+
+  TimeOfDay parseTimeOfDay(String timeString) {
+  final format = DateFormat.Hm(); // atau DateFormat("hh:mm a");
+  final dateTime = format.parse(timeString);
+  return TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
+}
+
 
   // Future<void> _submitData() async {
   //   if (_image == null ||
@@ -334,20 +344,29 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
       final bytes = await _image!.readAsBytes();
       final base64Image = base64Encode(bytes);
 
-      final newData = {
-        'image': base64Image,
-        'nama': _namaController.text,
-        'description': _deskripsiController.text,
-        'jam_buka': _jamBuka.format(context),
-        'jam_tutup': _jamTutup.format(context),
-        'latitude': _latitudeController.text,
-        'longitude': _longitudeController.text,
-        'createdAt': DateTime.now().toIso8601String(),
-        'fullname': fullname,
-        'userId': uid,
-      };
+     final newData = {
+  'gambarUrl': base64Image,                     
+  'nama': _namaController.text,
+  'deskripsi': _deskripsiController.text,       
+  'jamBuka':
+   _jamBuka.format(context),  
+  // parseTimeOfDay(_jamBuka.format(context)).format(context),       
+  'jamTutup': 
+   _jamTutup.format(context),  
+  // parseTimeOfDay(_jamTutup.format(context)).format(context),      
+  'latitude':  double.parse(_latitudeController.text),
+  'longitude':  double.parse(_longitudeController.text),
+  'createdAt': DateTime.now().toIso8601String(),
+  'fullname': fullname,
+  'userId': uid,
+  'kotaId': widget.kota.id,
+};
 
-      await FirebaseFirestore.instance.collection('posts_wisata').add(newData);
+      await FirebaseFirestore.instance
+  .collection('kotas')
+  .doc(widget.kota.id)
+  .collection('wisatas')
+  .add(newData);
 
       if (!mounted) return;
       Navigator.pop(context);

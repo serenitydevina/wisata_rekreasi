@@ -112,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 2,
                     ),
                     shrinkWrap: true,
+                     physics: NeverScrollableScrollPhysics(), 
                     itemBuilder: (context, index) {
                       final city = kota[index];
                       //final city = kota[index];
