@@ -1,22 +1,75 @@
 import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wisata_rekreasi/models/wisata.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final Wisata wisata;
   const DetailScreen({super.key, required this.wisata});
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  final user = FirebaseAuth.instance.currentUser;
+  bool isFavorited = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavorited();
+  }
+
+  Future<void> _checkIfFavorited() async {
+    final docId = '${user!.uid}_${widget.wisata.id}';
+    final doc = await FirebaseFirestore.instance.collection('favorites').doc(docId).get();
+    setState(() {
+      isFavorited = doc.exists;
+    });
+  }
+
+  Future<void> _toggleFavorite() async {
+    final favRef = FirebaseFirestore.instance
+        .collection('favorites')
+        .doc('${user!.uid}_${widget.wisata.id}');
+
+    if (isFavorited) {
+      await favRef.delete();
+    } else {
+      await favRef.set({
+        'userId': user!.uid,
+        'wisataId': widget.wisata.id,
+        'nama': widget.wisata.nama,
+        'gambarUrl': widget.wisata.gambarUrl,
+        'deskripsi': widget.wisata.deskripsi,
+        'jamBuka': widget.wisata.jamBuka,
+        'jamTutup': widget.wisata.jamTutup,
+      });
+    }
+
+    setState(() {
+      isFavorited = !isFavorited;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F8FA),
       appBar: AppBar(
-        title: Text(wisata.nama),
+        title: Text(widget.wisata.nama),
         backgroundColor: const Color(0xFFD9E5D6),
-        actions: const [
-          Icon(Icons.favorite_border),
-          SizedBox(width: 12),
+        actions: [
+          IconButton(
+            icon: Icon(
+              isFavorited ? Icons.favorite : Icons.favorite_border,
+              color: isFavorited ? Colors.red : null,
+            ),
+            onPressed: _toggleFavorite,
+          ),
+          const SizedBox(width: 12),
         ],
       ),
       body: ListView(
@@ -25,7 +78,7 @@ class DetailScreen extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.memory(
-             base64Decode(wisata.gambarUrl),
+              base64Decode(widget.wisata.gambarUrl),
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -34,13 +87,13 @@ class DetailScreen extends StatelessWidget {
           const SizedBox(height: 16),
           const Text("Deskripsi", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          Text(wisata.deskripsi),
+          Text(widget.wisata.deskripsi),
           const SizedBox(height: 16),
           Row(
             children: [
               const Icon(Icons.access_time),
               const SizedBox(width: 4),
-              Text('${wisata.jamBuka} - ${wisata.jamTutup}')
+              Text('${widget.wisata.jamBuka} - ${widget.wisata.jamTutup}')
             ],
           ),
           const SizedBox(height: 8),

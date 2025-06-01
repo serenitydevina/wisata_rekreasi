@@ -14,6 +14,7 @@ class Wisata {
   final String jamTutup;
   final String kotaId; 
   final DateTime createdAt;
+  bool isFavorite;
 
   Wisata({
     required this.id,
@@ -26,7 +27,8 @@ class Wisata {
     required this.jamBuka,
     required this.jamTutup,
     required this.kotaId, 
-    required this.createdAt
+    required this.createdAt,
+    this.isFavorite = false,
   });
 
   factory Wisata.fromDocument(DocumentSnapshot doc) {
