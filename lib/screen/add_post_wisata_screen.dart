@@ -423,11 +423,14 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
             TextField(
               controller: _namaController,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 labelText: "Nama Wisata",
                 labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1)),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),
-                ),
+               focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromRGBO(121, 116, 126, 1.0)
+                              ),
+                            ),
               ),
             ),
             SizedBox(height: 16),
@@ -435,8 +438,13 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
               controller: _deskripsiController,
               maxLines: 5,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 hintText: "Deskripsi",
-                border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),),
+                focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromRGBO(121, 116, 126, 1.0)
+                              ),
+                            ),
               ),
             ),
             SizedBox(height: 16),
@@ -456,22 +464,33 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
                   child: TextField(
                     controller: _latitudeController,
                     decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: "Lintang",
                        labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1)),
                       prefixIcon: Icon(Icons.location_on),
-                      border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),),
+                     focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromRGBO(121, 116, 126, 1.0)
+                              ),
+                            ),
                     ),
                   ),
                 ),
                 SizedBox(width: 16),
                 Expanded(
                   child: TextField(
+                    
                     controller: _longitudeController,
                     decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: "Bujur",
                        labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1)),
                       prefixIcon: Icon(Icons.location_on),
-                      border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),),
+                     focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromRGBO(121, 116, 126, 1.0)
+                              ),
+                            ),
                     ),
                   ),
                 ),

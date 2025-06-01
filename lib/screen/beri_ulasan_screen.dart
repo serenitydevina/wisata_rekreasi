@@ -98,7 +98,7 @@ void initState() {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 16 ,),
-              Text("Rating: $rating"),
+              Text("Rating: $rating", style: Theme.of(context).textTheme.bodyMedium,),
               FlutterAdvanceSlider(
                 min: 0, 
                 max: 5,
@@ -115,9 +115,15 @@ void initState() {
                  TextField(
               controller: _ulasanController,
               maxLines: 5,
+              // minLines: 1,
               decoration: InputDecoration(
+                border: const OutlineInputBorder(),
                 hintText: "Masukkan Ulasan Anda",
-                border: OutlineInputBorder(),
+               focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromRGBO(121, 116, 126, 1.0)
+                              ),
+                            ),
               ),
             ),
             const SizedBox(height: 25,),
