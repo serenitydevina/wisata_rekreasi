@@ -94,7 +94,7 @@ class _KategoriWisataScreenState extends State<KategoriWisataScreen> {
         onPressed: () {
           Navigator.of(
             context,
-          ).push(MaterialPageRoute(builder: (context) => const AddPostWisataScreen()));
+          ).push(MaterialPageRoute(builder: (context) => AddPostWisataScreen()));
         },
         backgroundColor: const Color.fromRGBO(141, 153, 174, 1),
         foregroundColor: Colors.white,
