@@ -83,4 +83,20 @@ class Wisata {
   //     'kotaId': kotaId, 
   //   };
   // }
+
+  factory Wisata.fromMap(Map<String, dynamic> map) {
+  return Wisata(
+    id: map['id'] ?? '',
+    nama: map['nama'] ?? '',
+    latitude: (map['latitude'] ?? 0).toDouble(),
+    longitude: (map['longitude'] ?? 0).toDouble(),
+    deskripsi: map['deskripsi'] ?? '',
+    gambarUrl: map['gambarUrl'] ?? '',
+    jamBuka: map['jamBuka'] ?? '',
+    jamTutup: map['jamTutup'] ?? '',
+    kotaId: map['kotaId'] ?? '',
+    createdAt: DateTime.tryParse(map['createdAt'] ?? '') ?? DateTime.now(),
+    isFavorite: true,
+  );
+  }
 }
