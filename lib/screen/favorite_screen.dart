@@ -86,6 +86,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    color: Theme.of(context).cardColor,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

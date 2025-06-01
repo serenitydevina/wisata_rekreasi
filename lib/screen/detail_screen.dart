@@ -57,10 +57,9 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F8FA),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(widget.wisata.nama),
-        backgroundColor: const Color(0xFFD9E5D6),
+        title: Text(widget.wisata.nama, style: Theme.of(context).textTheme.bodyLarge ,),
         actions: [
           IconButton(
             icon: Icon(
@@ -118,7 +117,7 @@ class _DetailScreenState extends State<DetailScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(12),
               boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
             ),
@@ -144,7 +143,7 @@ class _DetailScreenState extends State<DetailScreen> {
               backgroundColor: const Color(0xFF97AABF),
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
-            child: const Text("Tambah Ulasan"),
+            child: const Text("Tambah Ulasan", style: TextStyle(color: Colors.white),),
           )
         ],
       ),
