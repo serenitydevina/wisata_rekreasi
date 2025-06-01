@@ -206,6 +206,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_advance_slider:
+    dependency: "direct main"
+    description:
+      name: flutter_advance_slider
+      sha256: "949033fee37039768415141ffa88db3fac8667b45e209f46cb85a61f7f73f182"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   flutter_image_compress:
     dependency: "direct main"
     description:

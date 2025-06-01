@@ -424,7 +424,10 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
               controller: _namaController,
               decoration: InputDecoration(
                 labelText: "Nama Wisata",
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1)),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),
+                ),
               ),
             ),
             SizedBox(height: 16),
@@ -433,11 +436,11 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
               maxLines: 5,
               decoration: InputDecoration(
                 hintText: "Deskripsi",
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),),
               ),
             ),
             SizedBox(height: 16),
-            Row(
+            Column(
               children: [
                 Text("Jam Buka: "),
                 _buildTimeButton(_jamBuka, () => _pickTime(true),),
@@ -454,8 +457,9 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
                     controller: _latitudeController,
                     decoration: InputDecoration(
                       labelText: "Lintang",
+                       labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1)),
                       prefixIcon: Icon(Icons.location_on),
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),),
                     ),
                   ),
                 ),
@@ -465,8 +469,9 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
                     controller: _longitudeController,
                     decoration: InputDecoration(
                       labelText: "Bujur",
+                       labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1)),
                       prefixIcon: Icon(Icons.location_on),
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(121, 116, 126, 1)),),
                     ),
                   ),
                 ),

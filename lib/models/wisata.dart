@@ -11,7 +11,7 @@ class Wisata {
   final String deskripsi;
   final String gambarUrl;
   final String jamBuka;
-  final String jamTutup;
+  final String jamTutup; 
   final String kotaId; 
   final DateTime createdAt;
   bool isFavorite;

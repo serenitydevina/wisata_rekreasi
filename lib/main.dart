@@ -16,7 +16,7 @@ import 'package:wisata_rekreasi/screen/profile_screen.dart';
 import 'package:wisata_rekreasi/screen/register_screen.dart';
 import 'package:wisata_rekreasi/screen/splash_screen.dart';
 import 'package:wisata_rekreasi/screen/favorite_screen.dart';
-
+ 
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

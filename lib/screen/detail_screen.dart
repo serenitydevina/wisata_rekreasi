@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wisata_rekreasi/models/wisata.dart';
+import 'package:wisata_rekreasi/screen/beri_ulasan_screen.dart';
 
 class DetailScreen extends StatefulWidget {
   final Wisata wisata;
@@ -54,6 +55,7 @@ class _DetailScreenState extends State<DetailScreen> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +86,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text("Deskripsi", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+           Text("Deskripsi", style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
           Text(widget.wisata.deskripsi),
           const SizedBox(height: 16),
@@ -92,58 +94,102 @@ class _DetailScreenState extends State<DetailScreen> {
             children: [
               const Icon(Icons.access_time),
               const SizedBox(width: 4),
-              Text('${widget.wisata.jamBuka} - ${widget.wisata.jamTutup}')
+              Text('${widget.wisata.jamBuka} - ${widget.wisata.jamTutup}',style: Theme.of(context).textTheme.bodySmall,)
             ],
           ),
           const SizedBox(height: 8),
           Row(
-            children: const [
+            children:  [
               Icon(Icons.map),
               SizedBox(width: 4),
-              Text("Maps")
+              Text("Maps", style: Theme.of(context).textTheme.bodyMedium ,)
             ],
           ),
           const SizedBox(height: 8),
           Row(
-            children: const [
+            children:  [
               Icon(Icons.star),
               SizedBox(width: 4),
-              Text("4.4")
+              Text("4.4", style: Theme.of(context).textTheme.bodyMedium),
             ],
           ),
           const SizedBox(height: 16),
-          const Text("Ulasan", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text("Ulasan", style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection("kotas").doc(widget.wisata.kotaId).collection('wisatas').doc(widget.wisata.id).collection('ulasans').snapshots(), 
+            builder: (context, snapshot) {
+              if(snapshot.hasError) return Text('Error: ${snapshot.error}');
+              if (!snapshot.hasData) return CircularProgressIndicator();
+              if(!snapshot.hasData || snapshot.data!.docs.isEmpty) return Text('Tidak ada ulasan untuk wisata ini', style:Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center,);
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  final data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                  return Container(
+                    margin: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(data['name'], style: Theme.of(context).textTheme.bodySmall,),
+                        Row(
+                          children: [
+                            const Icon(Icons.star, size: 16, color: Colors.amber),
+                            Text(data['rating'].toString(), style: Theme.of(context).textTheme.bodySmall,),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(data['ulasan'],style: Theme.of(context).textTheme.bodySmall,)
+                      ],
+                    ),
+                    
+                  );
+                 
+                },
+                        );
+                        
+            },
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text("serenity devina", style: TextStyle(fontWeight: FontWeight.bold)),
-                Row(
-                  children: [
-                    Icon(Icons.star, size: 16, color: Colors.amber),
-                    Text("5")
-                  ],
-                ),
-                SizedBox(height: 4),
-                Text("Wisatanya Menarik! Balas")
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
+          // Container(
+          //   padding: const EdgeInsets.all(12),
+          //   decoration: BoxDecoration(
+          //     color: Theme.of(context).cardColor,
+          //     borderRadius: BorderRadius.circular(12),
+          //     boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
+          //   ),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: const [
+          //       Text("serenity devina", style: TextStyle(fontWeight: FontWeight.bold)),
+          //       Row(
+          //         children: [
+          //           Icon(Icons.star, size: 16, color: Colors.amber),
+          //           Text("5")
+          //         ],
+          //       ),
+          //       SizedBox(height: 4),
+          //       Text("Wisatanya Menarik!")
+          //     ],
+          //   ),
+          // ),
+          const SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => BeriUlasanScreen(wisata: widget.wisata,)));
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF97AABF),
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
-            child: const Text("Tambah Ulasan", style: TextStyle(color: Colors.white),),
+            child: Text("Tambah Ulasan", style: Theme.of(context).textTheme.bodyLarge,),
           )
         ],
       ),
