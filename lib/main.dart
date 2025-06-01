@@ -87,7 +87,8 @@ class MainApp extends StatelessWidget {
           textTheme: const TextTheme(
             bodyLarge: TextStyle(color: Colors.white,fontSize: 20, fontWeight: FontWeight.bold),
             bodyMedium: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-             bodySmall: TextStyle(color: Colors.black,fontWeight: FontWeight.w500, fontSize: 14),
+             bodySmall: TextStyle(color: Colors.white,fontWeight: FontWeight.w500, fontSize: 14),
+              headlineSmall: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Color.fromRGBO(112,151,117, 1),

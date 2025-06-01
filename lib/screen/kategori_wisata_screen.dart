@@ -21,7 +21,7 @@ class _KategoriWisataScreenState extends State<KategoriWisataScreen> {
     return Scaffold(
        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(207, 224, 195, 1),
+        backgroundColor:Theme.of(context).appBarTheme.backgroundColor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);

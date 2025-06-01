@@ -164,11 +164,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: const Icon(Icons.edit),
                 title: const Text('Edit Profil'),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfilScreen()));
+                onTap: () async {
+                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EditProfilScreen()));
+                  final result = await Navigator.push(
+                  context,
+                   MaterialPageRoute(builder: (context) => const EditProfilScreen()),
+                    );
+                    if (result == true) {
+                     await loadUserData(); // refresh nama dan foto setelah kembali
+                     }
                 },
               ),
-              // Tambahkan menu lain jika diperlukan di bawah sini
+             
             ],
           ),
         ),

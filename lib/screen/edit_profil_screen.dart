@@ -81,10 +81,10 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
       );
 
       // Arahkan ke halaman profil utama
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const ProfileScreen()),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const ProfileScreen()),
+      // );
     }
   }
    Future<void> _saveProfileImagePath(String path) async {
@@ -208,9 +208,14 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                          mainAxisAlignment: MainAxisAlignment.end,
                          children: [
                            ElevatedButton(
-                             onPressed:(){
-                               _saveName();
-                               _saveProfileImagePath(_image!.path);
+                             onPressed:()async{
+                              //  _saveName();
+                              //  _saveProfileImagePath(_image!.path);
+                                 await _saveName();
+                                  if (_image != null) {
+                                    await _saveProfileImagePath(_image!.path);
+                                    }
+                                    Navigator.pop(context, true);
                              },
                              style: ElevatedButton.styleFrom(
                                backgroundColor: Color.fromRGBO(141, 153, 174, 1),

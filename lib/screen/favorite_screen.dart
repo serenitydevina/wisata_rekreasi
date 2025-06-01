@@ -16,12 +16,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         backgroundColor:
         //  const Color.fromRGBO(207, 224, 195, 1),
         Theme.of(context).appBarTheme.backgroundColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        //   icon: const Icon(Icons.arrow_back, color: Colors.black),
+        // ),
         title: Text('Favorite', style: Theme.of(context).textTheme.bodyLarge),
         ), 
       );
