@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:wisata_rekreasi/screen/detail_screen.dart';
 import 'package:wisata_rekreasi/screen/kategori_wisata_screen.dart';
@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //   {'name': 'Denpasar', 'imagePath': 'assets/Denpasar.jpg'},
     // ];
     return Scaffold(
-       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 19.0),
@@ -42,23 +42,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
+                      Text(
                         'Hi!',
-                        style: 
-                        // TextStyle(
-                        //   fontSize: 12,
-                        //   fontWeight: FontWeight.w500,
-                        // ),
-                        Theme.of(context).textTheme.headlineSmall,
+                        style:
+                            // TextStyle(
+                            //   fontSize: 12,
+                            //   fontWeight: FontWeight.w500,
+                            // ),
+                            Theme.of(context).textTheme.headlineSmall,
                       ),
                       Text(
                         'Kota mana yang ingin dikunjungi?',
-                        style: 
-                        // TextStyle(
-                        //   fontSize: 12,
-                        //   fontWeight: FontWeight.w500,
-                        // ),
-                        Theme.of(context).textTheme.headlineSmall,
+                        style:
+                            // TextStyle(
+                            //   fontSize: 12,
+                            //   fontWeight: FontWeight.w500,
+                            // ),
+                            Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
                   ),
@@ -73,7 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 5),
               StreamBuilder<QuerySnapshot>(
                 stream:
-                    FirebaseFirestore.instance.collection('kotas').orderBy('createdAt', descending: false).snapshots(),
+                    FirebaseFirestore.instance
+                        .collection('kotas')
+                        .orderBy('createdAt', descending: false)
+                        .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) return CircularProgressIndicator();
                   // final kota = snapshot.data!.docs.map(
@@ -93,12 +96,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         final data = doc.data() as Map<String, dynamic>;
                         DateTime createdAt;
                         if (data['createdAt'] is Timestamp) {
-                  createdAt = (data['createdAt'] as Timestamp).toDate();
-                      } else if (data['createdAt'] is String) {
-                       createdAt = DateTime.tryParse(data['createdAt']) ?? DateTime.now();
-                  } else {
-                    createdAt = DateTime.now();
-                          }
+                          createdAt = (data['createdAt'] as Timestamp).toDate();
+                        } else if (data['createdAt'] is String) {
+                          createdAt =
+                              DateTime.tryParse(data['createdAt']) ??
+                              DateTime.now();
+                        } else {
+                          createdAt = DateTime.now();
+                        }
                         return Kota(
                           id: doc.id,
                           nama: data['nama'],
@@ -112,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 2,
                     ),
                     shrinkWrap: true,
-                     physics: NeverScrollableScrollPhysics(), 
+                    physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       final city = kota[index];
                       //final city = kota[index];
@@ -124,8 +129,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           'wisata-image-${city.createdAt.millisecondsSinceEpoch}';
                       return GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => KategoriWisataScreen(kota: city, role: widget.role,)
-                          ),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => KategoriWisataScreen(
+                                    kota: city,
+                                    role: widget.role,
+                                  ),
+                            ),
                           );
                         },
                         child: SizedBox(
@@ -143,8 +155,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ClipRRect(
                                   //borderRadius: BorderRadius.circular(10),
                                   borderRadius: const BorderRadius.vertical(
-                                   top: Radius.circular(10),
-                                   ),
+                                    top: Radius.circular(10),
+                                  ),
                                   child: Hero(
                                     tag: heroTag,
                                     child: Image.memory(
@@ -158,20 +170,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: const EdgeInsets.all(5.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                     MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                       Text(
-                                      city.nama,
-                                       style: 
-                                    //    const TextStyle(
-                                    //     fontSize: 16,
-                                    //     fontWeight: FontWeight.bold,
-                                    //  ),
-                                    Theme.of(context).textTheme.bodyMedium
-                                     ),
+                                      Text(
+                                        city.nama,
+                                        style:
+                                            //    const TextStyle(
+                                            //     fontSize: 16,
+                                            //     fontWeight: FontWeight.bold,
+                                            //  ),
+                                            Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium,
+                                      ),
                                     ],
                                   ),
-                                  ),
+                                ),
                               ],
                             ),
                           ),

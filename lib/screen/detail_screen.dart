@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wisata_rekreasi/models/wisata.dart';
 import 'package:wisata_rekreasi/screen/beri_ulasan_screen.dart';
 
@@ -26,10 +27,27 @@ class _DetailScreenState extends State<DetailScreen> {
 
   Future<void> _checkIfFavorited() async {
     final docId = '${user!.uid}_${widget.wisata.id}';
-    final doc = await FirebaseFirestore.instance.collection('favorites').doc(docId).get();
+    final doc =
+        await FirebaseFirestore.instance
+            .collection('favorites')
+            .doc(docId)
+            .get();
     setState(() {
       isFavorited = doc.exists;
     });
+  }
+
+  Future<void> openMap() async {
+    final uri = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=${widget.wisata.latitude},${widget.wisata.longitude}',
+    );
+    final success = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!mounted) return;
+    if (!success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tidak bisa membuka Google Maps')),
+      );
+    }
   }
 
   Future<void> _toggleFavorite() async {
@@ -50,6 +68,7 @@ class _DetailScreenState extends State<DetailScreen> {
         'jamTutup': widget.wisata.jamTutup,
         'latitude': widget.wisata.latitude,
         'longitude': widget.wisata.longitude,
+        'alamat': widget.wisata.alamat,
         'kotaId': widget.wisata.kotaId,
         'createdAt': widget.wisata.createdAt.toIso8601String(),
       });
@@ -65,7 +84,10 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(widget.wisata.nama, style: Theme.of(context).textTheme.bodyLarge),
+        title: Text(
+          widget.wisata.nama,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -94,72 +116,193 @@ class _DetailScreenState extends State<DetailScreen> {
           const SizedBox(height: 8),
           Text(widget.wisata.deskripsi),
           const SizedBox(height: 16),
+
+          // Jam Operasional
           Row(
             children: [
-              const Icon(Icons.access_time),
-              const SizedBox(width: 4),
-              Text('${widget.wisata.jamBuka} - ${widget.wisata.jamTutup}', style: Theme.of(context).textTheme.bodySmall),
+              const Icon(Icons.access_time, color: Colors.blue),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Jam Operasional",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Text(
+                      '${widget.wisata.jamBuka} - ${widget.wisata.jamTutup}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+
+          // Alamat
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.location_on, color: Colors.red),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Alamat",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Text(
+                      widget.wisata.alamat ?? 'Alamat tidak tersedia',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          // Rating
           Row(
             children: [
-              const Icon(Icons.map),
-              const SizedBox(width: 4),
-              Text("Maps", style: Theme.of(context).textTheme.bodyMedium),
+              const Icon(Icons.star, color: Colors.amber),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Rating",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Text("4.4", style: Theme.of(context).textTheme.bodySmall),
+                  ],
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              const Icon(Icons.star),
-              const SizedBox(width: 4),
-              Text("4.4", style: Theme.of(context).textTheme.bodyMedium),
-            ],
+          const SizedBox(height: 20),
+
+          // Tombol Lihat di Maps
+          ElevatedButton.icon(
+            onPressed: () {
+              openMap();
+            },
+            icon: const Icon(Icons.map, color: Colors.white),
+            label: const Text(
+              "Lihat di Maps",
+              style: TextStyle(color: Colors.white),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+            ),
           ),
-          const SizedBox(height: 16),
-          Text("Ulasan", style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 20),
+
+          Text(
+            "Ulasan",
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 8),
           StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("kotas")
-                .doc(widget.wisata.kotaId)
-                .collection('wisatas')
-                .doc(widget.wisata.id)
-                .collection('ulasans')
-                .snapshots(),
+            stream:
+                FirebaseFirestore.instance
+                    .collection("kotas")
+                    .doc(widget.wisata.kotaId)
+                    .collection('wisatas')
+                    .doc(widget.wisata.id)
+                    .collection('ulasans')
+                    .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) return Text('Error: ${snapshot.error}');
               if (!snapshot.hasData) return const CircularProgressIndicator();
               if (snapshot.data!.docs.isEmpty) {
-                return Text('Tidak ada ulasan untuk wisata ini', textAlign: TextAlign.center);
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Text(
+                    'Belum ada ulasan untuk wisata ini.\nJadilah yang pertama memberikan ulasan!',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                );
               }
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  final data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                  final data =
+                      snapshot.data!.docs[index].data() as Map<String, dynamic>;
                   return Container(
-                    margin: const EdgeInsets.all(8),
-                    padding: const EdgeInsets.all(12),
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(12),
-                      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(data['name'], style: Theme.of(context).textTheme.bodySmall),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Icon(Icons.star, size: 16, color: Colors.amber),
-                            Text(data['rating'].toString(), style: Theme.of(context).textTheme.bodySmall),
+                            Text(
+                              data['name'] ?? 'Anonymous',
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            Row(
+                              children: List.generate(5, (starIndex) {
+                                return Icon(
+                                  starIndex < (data['rating'] ?? 0)
+                                      ? Icons.star
+                                      : Icons.star_border,
+                                  size: 16,
+                                  color: Colors.amber,
+                                );
+                              }),
+                            ),
                           ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(data['ulasan'], style: Theme.of(context).textTheme.bodySmall),
+                        const SizedBox(height: 8),
+                        Text(
+                          data['ulasan'] ?? '',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        if (data['createdAt'] != null) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            data['createdAt'],
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.copyWith(
+                              color: Colors.grey.shade600,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   );
@@ -167,7 +310,7 @@ class _DetailScreenState extends State<DetailScreen> {
               );
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -181,7 +324,10 @@ class _DetailScreenState extends State<DetailScreen> {
               backgroundColor: const Color(0xFF97AABF),
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
-            child: Text("Tambah Ulasan", style: Theme.of(context).textTheme.bodyLarge),
+            child: Text(
+              "Tambah Ulasan",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
         ],
       ),

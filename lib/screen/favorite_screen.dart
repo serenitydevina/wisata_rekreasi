@@ -20,13 +20,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text("Favorite")),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('favorites')
-            .where('userId', isEqualTo: user!.uid)
-            .snapshots(),
+        stream:
+            FirebaseFirestore.instance
+                .collection('favorites')
+                .where('userId', isEqualTo: user!.uid)
+                .snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) return Center(child: Text('Error: ${snapshot.error}'));
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+          if (snapshot.hasError)
+            return Center(child: Text('Error: ${snapshot.error}'));
+          if (!snapshot.hasData)
+            return const Center(child: CircularProgressIndicator());
 
           final docs = snapshot.data!.docs;
           if (docs.isEmpty) {
@@ -55,9 +58,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 latitude: (data['latitude'] as num?)?.toDouble() ?? 0.0,
                 longitude: (data['longitude'] as num?)?.toDouble() ?? 0.0,
                 kotaId: data['kotaId'] ?? '',
-                createdAt: (data['createdAt'] is Timestamp)
-                    ? (data['createdAt'] as Timestamp).toDate()
-                    : DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
+                alamat: data['alamat'],
+                createdAt:
+                    (data['createdAt'] is Timestamp)
+                        ? (data['createdAt'] as Timestamp).toDate()
+                        : DateTime.tryParse(data['createdAt'] ?? '') ??
+                            DateTime.now(),
               );
 
               return GestureDetector(
@@ -80,7 +86,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             color: Colors.black12,
                             blurRadius: 4,
                             offset: Offset(0, 2),
-                          )
+                          ),
                         ],
                       ),
                       child: Column(
@@ -89,21 +95,30 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                           Expanded(
                             child: ClipRRect(
                               borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  topRight: Radius.circular(12)),
-                              child: wisata.gambarUrl.isNotEmpty
-                                  ? Image.memory(
-                                      base64Decode(wisata.gambarUrl),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Container(
-                                      color: Colors.grey[300],
-                                      child: const Icon(Icons.image, size: 40, color: Colors.grey),
-                                    ),
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                              ),
+                              child:
+                                  wisata.gambarUrl.isNotEmpty
+                                      ? Image.memory(
+                                        base64Decode(wisata.gambarUrl),
+                                        fit: BoxFit.cover,
+                                      )
+                                      : Container(
+                                        color: Colors.grey[300],
+                                        child: const Icon(
+                                          Icons.image,
+                                          size: 40,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 6,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -117,7 +132,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.favorite, color: Colors.red),
+                                  icon: const Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  ),
                                   onPressed: () async {
                                     final docId = docs[index].id;
                                     await FirebaseFirestore.instance
@@ -125,7 +143,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                         .doc(docId)
                                         .delete();
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text("Dihapus dari favorit")),
+                                      const SnackBar(
+                                        content: Text("Dihapus dari favorit"),
+                                      ),
                                     );
                                   },
                                 ),
