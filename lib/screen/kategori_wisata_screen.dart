@@ -31,7 +31,7 @@ class _KategoriWisataScreenState extends State<KategoriWisataScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.bodyLarge!.color),
         ),
         title: Text(widget.kota.nama),
       ),
