@@ -84,7 +84,7 @@ class _BeriUlasanScreenState extends State<BeriUlasanScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.bodyLarge!.color),
         ),
         title: Text(
           'Beri Ulasan',
