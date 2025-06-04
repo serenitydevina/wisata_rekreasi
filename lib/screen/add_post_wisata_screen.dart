@@ -301,7 +301,7 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: "Nama Wisata",
-                labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1)),
+                labelStyle:  Theme.of(context).textTheme.labelSmall,
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Color.fromRGBO(121, 116, 126, 1.0),
@@ -345,9 +345,7 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: "Lintang",
-                      labelStyle: TextStyle(
-                        color: Color.fromRGBO(73, 69, 79, 1),
-                      ),
+                      labelStyle: Theme.of(context).textTheme.labelSmall,
                       prefixIcon: Icon(Icons.location_on),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -367,9 +365,7 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: "Bujur",
-                      labelStyle: TextStyle(
-                        color: Color.fromRGBO(73, 69, 79, 1),
-                      ),
+                      labelStyle:  Theme.of(context).textTheme.labelSmall,
                       prefixIcon: Icon(Icons.location_on),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -391,9 +387,7 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: "Alamat",
-                      labelStyle: TextStyle(
-                        color: Color.fromRGBO(73, 69, 79, 1),
-                      ),
+                      labelStyle:  Theme.of(context).textTheme.labelSmall,
                       prefixIcon: Icon(Icons.place),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -435,11 +429,7 @@ class _AddPostWisataScreenState extends State<AddPostWisataScreen> {
             SizedBox(height: 8),
             Text(
               "Alamat akan otomatis dicari saat Anda menginput koordinat",
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 12,
-                fontStyle: FontStyle.italic,
-              ),
+              style: Theme.of(context).textTheme.labelMedium,
             ),
             SizedBox(height: 24),
             _isLoading

@@ -150,11 +150,11 @@ class _AddPostKotaScreenState extends State<AddPostKotaScreen> {
              const SizedBox(height: 16.0),
              TextFormField(
               controller: _namaKotaController,
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Nama Kota',
                       hintText: "Masukkan Nama Kota",
-                      labelStyle: TextStyle(color: Color.fromRGBO(73, 69, 79, 1.0)),
+                      labelStyle: Theme.of(context).textTheme.labelSmall,
                       focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color.fromRGBO(121, 116, 126, 1.0)

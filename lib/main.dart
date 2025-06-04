@@ -66,30 +66,35 @@ class MainApp extends StatelessWidget {
           foregroundColor: Colors.black,
         ),
         cardColor: Colors.white,
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(
+        textTheme: TextTheme(
+          bodyLarge: const TextStyle(
             color: Colors.black,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-          bodyMedium: TextStyle(
+          bodyMedium: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w600,
             fontSize: 16,
           ),
-          bodySmall: TextStyle(
+          bodySmall: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w500,
             fontSize: 14,
           ),
-          headlineSmall: TextStyle(
+          headlineSmall: const TextStyle(
             color: Colors.black,
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
-          labelSmall: TextStyle(
+          labelSmall: const TextStyle(
             color:  Color.fromRGBO(73, 69, 79, 1.0)
             ),
+          labelMedium:  TextStyle(
+                color: Colors.grey[600],
+                fontSize: 12,
+                fontStyle: FontStyle.italic,
+              ),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color.fromRGBO(207, 224, 195, 1),
@@ -105,29 +110,35 @@ class MainApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         cardColor: Color.fromRGBO(1, 79, 134, 1),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(
+        textTheme: TextTheme(
+          bodyLarge: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-          bodyMedium: TextStyle(
+          bodyMedium: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
             fontSize: 16,
           ),
-          bodySmall: TextStyle(
+          bodySmall: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
             fontSize: 14,
           ),
-          headlineSmall: TextStyle(
+          headlineSmall: const TextStyle(
             color: Colors.white,
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
-          labelSmall: TextStyle(
-            color:   Color.fromRGBO( 237,242,244,1),)
+          labelSmall: const TextStyle(
+            color:   Color.fromRGBO( 237,242,244,1),
+            ),
+            labelMedium:  TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontStyle: FontStyle.italic,
+              ),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color.fromRGBO(112, 151, 117, 1),
