@@ -65,6 +65,7 @@ class MainApp extends StatelessWidget {
           backgroundColor: Color.fromRGBO(207, 224, 195, 1),
           foregroundColor: Colors.black,
         ),
+        canvasColor: Color.fromRGBO(1, 42, 74, 1),
         cardColor: Colors.white,
         textTheme: TextTheme(
           bodyLarge: const TextStyle(
@@ -109,6 +110,7 @@ class MainApp extends StatelessWidget {
           backgroundColor: Color.fromRGBO(112, 151, 117, 1),
           foregroundColor: Colors.white,
         ),
+        canvasColor:  Color.fromRGBO(237, 242, 244, 1.0),
         cardColor: Color.fromRGBO(1, 79, 134, 1),
         textTheme: TextTheme(
           bodyLarge: const TextStyle(

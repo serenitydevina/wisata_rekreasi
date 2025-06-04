@@ -80,7 +80,7 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Nama berhasil disimpan")));
+      ).showSnackBar(const SnackBar(content: Text("Edit Profil berhasil dilakukan")));
 
       // Arahkan ke halaman profil utama
       // Navigator.pushReplacement(
@@ -166,10 +166,10 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                           radius: 25,
                           child: Icon(
                             Icons.edit,
-                            color: Color.fromRGBO(141, 153, 174, 1),
+                            color:  Color.fromRGBO(141, 153, 174, 1),
                           ),
                           backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
+                             Theme.of(context).canvasColor,
                         ),
                       ),
                     ),
@@ -208,7 +208,7 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Peringatan : Foto Profil anda hanya bisa disimpan secara lokal atau satu perangkat saja. Jika anda menggunakan perangkat lain atau menghapus perangkat, maka foto anda akan hilanng.',
+                        'Peringatan : Foto Profil anda hanya bisa disimpan secara lokal atau satu perangkat saja. Jika anda menggunakan perangkat lain atau menghapus aplikasi, maka foto anda akan hilang.',
                         style: TextStyle(
                           color: Colors.red,
                         ),
