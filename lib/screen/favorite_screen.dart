@@ -58,14 +58,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 latitude: (data['latitude'] as num?)?.toDouble() ?? 0.0,
                 longitude: (data['longitude'] as num?)?.toDouble() ?? 0.0,
                 kotaId: data['kotaId'] ?? '',
-                alamat: data['alamat'],
+                alamat: data['alamat']??'',
                 createdAt:
                     (data['createdAt'] is Timestamp)
                         ? (data['createdAt'] as Timestamp).toDate()
                         : DateTime.tryParse(data['createdAt'] ?? '') ??
                             DateTime.now(),
               );
-
+              
               return GestureDetector(
                 onTap: () {
                   Navigator.push(

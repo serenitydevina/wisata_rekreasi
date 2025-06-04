@@ -61,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             border: OutlineInputBorder(),
                             labelText: 'Nama',
                             hintText: "Masukkan Nama",
-                            labelStyle: const TextStyle(color: Color.fromRGBO(73, 69, 79, 1.0)),
+                            labelStyle:  Theme.of(context).textTheme.labelSmall,
                             focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color.fromRGBO(121, 116, 126, 1.0)
@@ -80,11 +80,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: const EdgeInsets.all(5.0),
                         child: TextFormField(
                           controller: _emailController,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Email',
                             hintText: "Masukkan Email",
-                            labelStyle: const TextStyle(color: Color.fromRGBO(73, 69, 79, 1.0)),
+                            labelStyle: Theme.of(context).textTheme.labelSmall,
                              focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color.fromRGBO(121, 116, 126, 1.0)
@@ -120,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 });
                               },
                             ),
-                             labelStyle: const TextStyle(color: Color.fromRGBO(73, 69, 79, 1.0)),
+                             labelStyle:  Theme.of(context).textTheme.labelSmall,
                               focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color.fromRGBO(121, 116, 126, 1.0)

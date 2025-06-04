@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wisata_rekreasi/models/wisata.dart';
 import 'package:wisata_rekreasi/screen/beri_ulasan_screen.dart';
+import 'package:wisata_rekreasi/screen/full_image%20screen.dart';
 
 class DetailScreen extends StatefulWidget {
   final Wisata wisata;
@@ -18,11 +19,13 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   final user = FirebaseAuth.instance.currentUser;
   bool isFavorited = false;
+  double averageRating = 0.0;
 
   @override
   void initState() {
     super.initState();
     _checkIfFavorited();
+    _calculateAverageRating();
   }
 
   Future<void> _checkIfFavorited() async {
@@ -79,6 +82,28 @@ class _DetailScreenState extends State<DetailScreen> {
     });
   }
 
+  Future<void> _calculateAverageRating() async {
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection('kotas')
+            .doc(widget.wisata.kotaId)
+            .collection('wisatas')
+            .doc(widget.wisata.id)
+            .collection('ulasans')
+            .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      double total = 0;
+      for (var doc in snapshot.docs) {
+        total += (doc.data()['rating'] ?? 0).toDouble();
+      }
+      setState(() {
+        averageRating = total / snapshot.docs.length;
+
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,14 +127,28 @@ class _DetailScreenState extends State<DetailScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.memory(
-              base64Decode(widget.wisata.gambarUrl),
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          GestureDetector(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.memory(
+                base64Decode(widget.wisata.gambarUrl),
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return FullscreenImageScreen(
+                      imageBase64: widget.wisata.gambarUrl,
+                    );
+                  },
+                ),
+              );
+            },
           ),
           const SizedBox(height: 16),
           Text("Deskripsi", style: Theme.of(context).textTheme.bodyMedium),
@@ -179,7 +218,12 @@ class _DetailScreenState extends State<DetailScreen> {
                       "Rating",
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    Text("4.4", style: Theme.of(context).textTheme.bodySmall),
+                    Text(
+                      averageRating > 0
+                          ? averageRating.toStringAsFixed(1)
+                          : "Belum ada rating",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ],
                 ),
               ),
@@ -318,7 +362,9 @@ class _DetailScreenState extends State<DetailScreen> {
                 MaterialPageRoute(
                   builder: (context) => BeriUlasanScreen(wisata: widget.wisata),
                 ),
-              );
+              ).then((_){
+                _calculateAverageRating();
+              });
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF97AABF),

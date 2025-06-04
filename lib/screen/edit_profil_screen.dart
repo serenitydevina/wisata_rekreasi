@@ -198,14 +198,19 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                             },
                             icon: const Icon(Icons.cancel_outlined),
                           ),
-                          labelStyle: TextStyle(
-                            color: Color.fromRGBO(73, 69, 79, 1.0),
-                          ),
+                          labelStyle: Theme.of(context).textTheme.labelSmall,
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color.fromRGBO(121, 116, 126, 1.0),
                             ),
                           ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Peringatan : Foto Profil anda hanya bisa disimpan secara lokal atau satu perangkat saja. Jika anda menggunakan perangkat lain atau menghapus perangkat, maka foto anda akan hilanng.',
+                        style: TextStyle(
+                          color: Colors.red,
                         ),
                       ),
                       const SizedBox(height: 16),

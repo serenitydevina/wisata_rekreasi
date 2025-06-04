@@ -87,6 +87,9 @@ class MainApp extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
+          labelSmall: TextStyle(
+            color:  Color.fromRGBO(73, 69, 79, 1.0)
+            ),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color.fromRGBO(207, 224, 195, 1),
@@ -123,6 +126,8 @@ class MainApp extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
+          labelSmall: TextStyle(
+            color:   Color.fromRGBO( 237,242,244,1),)
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color.fromRGBO(112, 151, 117, 1),
